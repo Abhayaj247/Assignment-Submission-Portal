@@ -19,8 +19,7 @@ Before you begin, ensure you have the following installed:
 Start by cloning the project repository. You can use Git to clone the repository:
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/Abhayaj247/Assignment-Submission-Portal.git 
 ```
 ## 3. Install Dependencies
 
