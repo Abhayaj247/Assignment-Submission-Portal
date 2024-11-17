@@ -2,7 +2,7 @@
 const express = require('express');
 const { register, login, getAssignments, acceptAssignment, rejectAssignment } = require('../controllers/adminController');
 const auth = require('../middleware/auth');
-const { validate, registerAdminSchema, loginAdminSchema, acceptAssignmentSchema, rejectAssignmentSchema } = require('../Validations/adminValidation');
+const { validate, registerAdminSchema, loginAdminSchema } = require('../Validations/adminValidation');
 const router = express.Router();
 
 router.post('/register', validate(registerAdminSchema), register);

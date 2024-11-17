@@ -41,26 +41,24 @@ exports.login = async (req, res) => {
 // Upload an assignment
 exports.uploadAssignment = async (req, res) => {
     const { task, adminId } = req.body;
-    const userId = req.user.id;  // Get the authenticated user's ID (assumes user is authenticated via middleware)
+    const userId = req.user.id; 
 
     try {
-        // Ensure the admin exists
         const admin = await User.findById(adminId);
         if (!admin || admin.role !== 'Admin') {
             return res.status(400).json({ msg: 'Invalid admin ID provided' });
         }
 
-        // Create a new assignment
         const assignment = new Assignment({
-            userId,      // Use the authenticated user's ID
+            userId,      
             task,
-            admin: adminId // Set the admin ID
+            admin: adminId 
         });
 
-        // Save the assignment
+        
         await assignment.save();
 
-        // Respond with success message
+        
         res.status(201).json({ msg: 'Assignment uploaded successfully' });
     } catch (err) {
         console.error(err);

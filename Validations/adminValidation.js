@@ -41,8 +41,7 @@ const loginAdminSchema = z.object({
 // Validation middleware function
 const validate = (schema) => {
   return (req, res, next) => {
-    const result = schema.safeParse(req.body); // Use safeParse for POST body validation
-
+    const result = schema.safeParse(req.body); 
     if (!result.success) {
       return res.status(400).json({
         msg: 'Validation error',
@@ -50,7 +49,7 @@ const validate = (schema) => {
       });
     }
 
-    // If validation is successful, pass control to the next middleware/controller
+   
     next();
   };
 };

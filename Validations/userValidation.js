@@ -46,7 +46,7 @@ const uploadAssignmentSchema = z.object({
 
   adminId: z
     .string()
-    .length(24, { message: 'Admin ID must be a valid MongoDB ObjectId' }), // Assuming adminId is a MongoDB ObjectId
+    .length(24, { message: 'Admin ID must be a valid MongoDB ObjectId' }),
 });
 
 
@@ -55,17 +55,17 @@ const validate = (schema) => {
   return (req, res, next) => {
     try {
       if (req.body) {
-        schema.parse(req.body); // Validate request body
+        schema.parse(req.body); 
       } else if (req.query) {
-        schema.parse(req.query); // Validate query parameters
+        schema.parse(req.query); 
       } else if (req.params) {
-        schema.parse(req.params); // Validate URL parameters
+        schema.parse(req.params); 
       }
-      next(); // Proceed to the next middleware or route handler if validation is successful
+      next(); 
     } catch (error) {
       return res.status(400).json({
         msg: 'Validation failed',
-        errors: error.errors, // Detailed validation error messages
+        errors: error.errors, 
       });
     }
   };

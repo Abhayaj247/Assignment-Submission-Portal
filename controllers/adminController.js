@@ -12,15 +12,15 @@ exports.register = async (req, res) => {
             return res.status(400).json({ msg: 'Email already exists' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
         const admin = new User({
             name,
             email,
             password: hashedPassword,
-            role: 'Admin', // Set role as 'Admin'
+            role: 'Admin',
         });
         
-        await admin.save(); // Save the admin to the database
+        await admin.save();
 
         res.status(201).json({ msg: 'Admin registered successfully' });
     } catch (err) {
@@ -38,13 +38,11 @@ exports.login = async (req, res) => {
             return res.status(400).json({ msg: 'Admin not found' });
         }
 
-        // Compare the input password with the hashed password stored in the database
         const isMatch = await bcrypt.compare(password, admin.password);
         if (!isMatch) {
             return res.status(400).json({ msg: 'Invalid credentials' });
         }
 
-        // Generate a JWT token
         const token = jwt.sign(
             { id: admin._id, role: admin.role },
             process.env.JWT_SECRET,
@@ -58,14 +56,13 @@ exports.login = async (req, res) => {
     }
 };
 
-// Get all assignments tagged to the admin
 exports.getAssignments = async (req, res) => {
     try {
         const assignments = await Assignment.find({ admin: req.user.id })
-            .populate({ path: 'userId', select: 'name' })   // Populate userId with name only
-            .populate({ path: 'admin', select: 'name' })    // Populate admin with name only
-            .select('-__v')                                 // Exclude the `__v` field
-            .sort({ createdAt: -1 });                       // Sort by most recent
+            .populate({ path: 'userId', select: 'name' })  
+            .populate({ path: 'admin', select: 'name' })   
+            .select('-__v')                                
+            .sort({ createdAt: -1 });                      
 
         res.json(assignments);
     } catch (err) {
@@ -76,14 +73,14 @@ exports.getAssignments = async (req, res) => {
 // Accept an assignment
 exports.acceptAssignment = async (req, res) => {
     try {
-        const { id } = req.params;  // Get the assignment ID from the URL parameter
-        const adminId = req.user._id;  // Get the logged-in admin's ID from the token
+        const { id } = req.params;  
+        const adminId = req.user._id; 
 
-        // Find the assignment by ID and update its status to "Accepted"
+        
         const assignment = await Assignment.findOneAndUpdate(
-            { _id: id, adminId: adminId },  // Ensure the assignment belongs to the admin
-            { status: 'Accepted' },          // Update status
-            { new: true }                    // Return the updated assignment
+            { _id: id, adminId: adminId },  
+            { status: 'Accepted' },          
+            { new: true }                    
         );
 
         if (!assignment) {

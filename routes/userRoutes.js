@@ -8,6 +8,6 @@ const router = express.Router();
 router.post('/register',validate(registerUserSchema), register);
 router.post('/login', validate(loginUserSchema), login);
 router.post('/upload', auth, validate(uploadAssignmentSchema), uploadAssignment);
-router.get('/admins', auth, getAllAdmins); // Route to fetch all admins
+router.get('/admins', auth, getAllAdmins);
 
 module.exports = router;
