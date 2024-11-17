@@ -14,6 +14,7 @@ Before you begin, ensure you have the following installed:
 - npm (Node Package Manager)
 - MongoDB Atlas account for a cloud-based MongoDB instance (or MongoDB locally)
 - Postman or any API testing tool for interacting with the backend
+
 ## 2. Clone the Repository
 
 Start by cloning the project repository. You can use Git to clone the repository:
@@ -21,6 +22,7 @@ Start by cloning the project repository. You can use Git to clone the repository
 ```bash
 git clone https://github.com/Abhayaj247/Assignment-Submission-Portal.git 
 ```
+
 ## 3. Install Dependencies
 
 Once you have cloned the repository, navigate to the project folder and run the following command to install all necessary dependencies:
@@ -30,6 +32,7 @@ npm install
 ```
 This will install the required dependencies listed in 
 ```package.json```.
+
 ## 4. Set Up Environment Variables
 
 The application relies on environment variables to configure the MongoDB connection and the JWT secret.
@@ -59,6 +62,7 @@ If you are using MongoDB Atlas:
 - Create an account if you don't have one.
 - Create a new cluster and get the connection URI.
 - Ensure the cluster has a database user with the necessary permissions.
+
 ## 6. Running the Application
 
 Once the dependencies are installed and the environment variables are set, you can run the application.
@@ -69,6 +73,7 @@ npx nodemon app.js or node app.js
 ```
 
 This will start the Express server on ``` http://localhost:5000 ```.
+
 ## 7. Test the API with Postman
 
 To interact with the API, you can use Postman or any other API testing tool. Here are the endpoints:
@@ -149,37 +154,7 @@ To interact with the API, you can use Postman or any other API testing tool. Her
    - Parameters: Assignment id (in URL)
    - Requires Rauthentication.
 
-## 8. Testing the Application
-
-Here’s how to use Postman to test the application:
-
-- ##  Register User:
-    -   First, use the User Registration endpoint to create a new user. This will store the user’s information (name, email, password) in the database.
-    - The password will be hashed before storage.
-- ## Login User:
-    - To authenticate, send a POST request to ```/api/users/login``` with the user's email and password.
-    - If successful, the server will respond with a JWT token. You need to store this token, as it will be required for subsequent requests to protected routes (e.g., uploading assignments).
-- ## User Upload Assignment:
-    - Use the Upload Assignment endpoint to upload assignments. Ensure you pass the correct ```adminId``` in the request body.
-- ## Register a new Admin:
-    - Use the Admin Registration endpoint to create an admin.
-- ## Login Admin:
-    - Use the Admin Login endpoint to log in and receive a JWT token.
-    - The token should be passed in the Authorization header as ```<token>``` for subsequent requests.
-- ## Accept/Reject Assignment:
-    - Use the Accept Assignment and Reject Assignment endpoints as an admin to manage the tasks.
-
-
-## 9. Validation and Error Handling
-
-- Input Validation: Both admin and user registration use Zod schemas for input validation. If any input is invalid, a detailed error response will be returned.
-- JWT Authentication: All protected routes require authentication. Make sure to include the JWT token in the ```Authorization``` header when accessing these routes.
-## 10. Possible Errors
-
-- Missing Token: If you try to access a protected route without the ```Authorization``` header, you will get a ```401 Unauthorized``` error.
-- Invalid Credentials: If the login credentials are incorrect, you will get a ```400 Bad Request``` error.
-- Validation Error: If the input data does not pass validation, you will receive a ```400 Bad Request``` error with details of the validation issues.
-## 10. Database Structure
+## 8. Database Structure
 
 - ## Users Collection
     The ```Users```  collection stores details about users and admins. It includes basic information like name, email, password, and role.
@@ -206,3 +181,35 @@ Here’s how to use Postman to test the application:
         "status": "String",                   // Status of the assignment: "Pending", "Accepted", or "Rejected"
         "createdAt": "Date"                   // Date when the assignment was created
     }
+
+## 9. Testing the Application
+
+Here’s how to use Postman to test the application:
+
+- ##  Register User:
+    -   First, use the User Registration endpoint to create a new user. This will store the user’s information (name, email, password) in the database.
+    - The password will be hashed before storage.
+- ## Login User:
+    - To authenticate, send a POST request to ```/api/users/login``` with the user's email and password.
+    - If successful, the server will respond with a JWT token. You need to store this token, as it will be required for subsequent requests to protected routes (e.g., uploading assignments).
+- ## User Upload Assignment:
+    - Use the Upload Assignment endpoint to upload assignments. Ensure you pass the correct ```adminId``` in the request body.
+- ## Register a new Admin:
+    - Use the Admin Registration endpoint to create an admin.
+- ## Login Admin:
+    - Use the Admin Login endpoint to log in and receive a JWT token.
+    - The token should be passed in the Authorization header as ```<token>``` for subsequent requests.
+- ## Accept/Reject Assignment:
+    - Use the Accept Assignment and Reject Assignment endpoints as an admin to manage the tasks.
+
+
+## 10. Validation and Error Handling
+
+- Input Validation: Both admin and user registration use Zod schemas for input validation. If any input is invalid, a detailed error response will be returned.
+- JWT Authentication: All protected routes require authentication. Make sure to include the JWT token in the ```Authorization``` header when accessing these routes.
+- 
+## 11. Possible Errors
+
+- Missing Token: If you try to access a protected route without the ```Authorization``` header, you will get a ```401 Unauthorized``` error.
+- Invalid Credentials: If the login credentials are incorrect, you will get a ```400 Bad Request``` error.
+- Validation Error: If the input data does not pass validation, you will receive a ```400 Bad Request``` error with details of the validation issues.
